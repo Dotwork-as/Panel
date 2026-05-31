@@ -5,8 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:prod": "npx ng build --configuration production --base-href /Angular-Panel/",
-    "build:dev": "npx ng build --configuration development --base-href /Angular-Panel/",
+    "build:prod": "npx ng build --configuration production --base-href /Panel/",
+    "build:dev": "npx ng build --configuration development --base-href /Panel/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

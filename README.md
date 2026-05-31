@@ -1,6 +1,6 @@
 # Panel – Admin UI Template & Design System
 
-🌐 **Live demo:** [https://dotwork-as.github.io/Angular-Panel/](https://dotwork-as.github.io/Angular-Panel/)
+🌐 **Live demo:** [https://dotwork-as.github.io/Panel/](https://dotwork-as.github.io/Panel/)
 
 Modern Angular-based admin panel and UI platform built with **Angular 19**, **PrimeNG**, and **NgRx**, featuring a **fully themable design system**, **permission-based access control**, and a **reusable data table** suitable for enterprise dashboards and back-office applications.
 
