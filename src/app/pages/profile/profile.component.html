@@ -1,0 +1,48 @@
+<p-tabs value="0">
+  <p-tablist>
+    <p-tab value="0">{{ 'profile.personal_info' | translate }}</p-tab>
+    <p-tab value="1">{{ 'profile.change_password' | translate }}</p-tab>
+  </p-tablist>
+  <p-tabpanels>
+    <p-tabpanel value="0">
+      <ng-container>
+        <div class="flex flex-col items-start">
+          <div class="flex items-center justify-center mb-3">
+            <span class="min-w-[120px] font-normal text-base text-surface-700">{{ 'profile.first_name' | translate }}</span>
+            <span class="font-normal text-lg text-surface-400">{{ (userData$ | async).firstName }}</span>
+          </div>
+          <div class="flex items-center justify-center mb-3">
+            <span class="min-w-[120px] font-normal text-base text-surface-700">{{ 'profile.last_name' | translate }}</span>
+            <span class="font-normal text-lg text-surface-400">{{ (userData$ | async).lastName }}</span>
+          </div>
+          <div class="flex items-center justify-center mb-3">
+            <span class="min-w-[120px] font-normal text-base text-surface-700">{{ 'profile.national_code' | translate }}</span>
+            <span class="font-normal text-lg text-surface-400">{{ (userData$ | async).nationalCode }}</span>
+          </div>
+          <div class="flex items-center justify-center mb-3">
+            <span class="min-w-[120px] font-normal text-base text-surface-700">{{ 'profile.phone' | translate }}</span>
+            <span class="font-normal text-lg text-surface-400">{{ (userData$ | async).mobile }}</span>
+          </div>
+          <div class="flex items-center justify-center mb-3">
+            <span class="min-w-[120px] font-normal text-base text-surface-700">{{ 'profile.email' | translate }}</span>
+            <span class="font-normal text-lg text-surface-400">{{ (userData$ | async).email }}</span>
+          </div>
+          <div class="flex items-center justify-center mb-3">
+            <span class="min-w-[120px] font-normal text-base text-surface-700">{{ 'profile.username' | translate }}</span>
+            <span class="font-normal text-lg text-surface-400">{{ (userData$ | async).username }}</span>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noReadPermission>
+        <div class="flex items-center justify-center h-full">
+          {{ 'feedback.no_access' | translate }}
+        </div>
+      </ng-template>
+    </p-tabpanel>
+    <p-tabpanel value="1">
+      <div class="flex items-center justify-center h-full">
+        {{ 'feedback.no_access' | translate }}
+      </div>
+    </p-tabpanel>
+  </p-tabpanels>
+</p-tabs>

@@ -1,0 +1,38 @@
+html[dir="rtl"] {
+  .material-symbols-outlined {
+    direction: rtl !important;
+  }
+  .pi-angle-right, .pi-angle-left {
+    transform: rotate(180deg)
+  }
+
+
+  .p-tieredmenu-submenu {
+    inset-inline-start: 100%;
+    left: unset !important;
+  }
+
+  .p-selectbutton .p-togglebutton {
+    border-width: 1px;
+    border-inline-start-width: 0;
+  }
+  .p-selectbutton p-togglebutton:first-child .p-togglebutton {
+    border-inline-start-width: 1px;
+  }
+
+  .p-divider-left:dir(rtl), .p-divider-right:dir(rtl) {
+    flex-direction: row !important;
+  }
+
+  .submenu-without-indent {
+    .p-panelmenu-submenu {
+      padding: 0;
+    }
+  }
+
+  .p-datepicker-dropdown {
+    border-left: 1px solid var(--p-datepicker-dropdown-border-color);
+    border-inline-start: 0;
+  }
+
+}

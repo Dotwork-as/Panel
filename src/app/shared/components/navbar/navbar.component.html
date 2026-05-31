@@ -1,0 +1,131 @@
+<ng-container [ngSwitch]="true">
+  <ng-container *ngSwitchCase="['center'].includes(navbar_type$ | async)">
+    <div
+      class="navbar h-[4rem] relative flex items-center justify-between bg-primary rounded-xl m-4 brightness-90"
+      [ngClass]="{ 'brightness-130': !(darkMode$ | async) }"
+      style="
+        box-shadow:
+          rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+          rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+          rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        background: #833ab4;
+        background: linear-gradient(270deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+      "
+    >
+      <span>
+        <i icon-name="menu" *ngIf="!['slim+', 'horizontal'].includes(sidebarType$ | async)" class="flex! text-surface-0 cursor-pointer px-3" (click)="toggle_sidebar()"></i>
+      </span>
+      <span class="flex items-center px-2 lg:pe-4">
+        <div class="flex items-center justify-center bg-blue-400/10 rounded-border ms-2.5" style="width: 2rem; height: 2rem" *ngIf="(language$ | async) != 'fa'">
+          <span pRipple class="animate-fadeinup cursor-pointer text-surface-0" (click)="changeLanguage('fa')">FA</span>
+        </div>
+        <div class="flex items-center justify-center bg-blue-400/10 rounded-border ms-2.5" style="width: 2rem; height: 2rem" *ngIf="(language$ | async) != 'en'">
+          <span pRipple class="animate-fadeinup cursor-pointer text-surface-0" (click)="changeLanguage('en')">EN</span>
+        </div>
+
+        <div class="flex items-center justify-center bg-blue-400/10 rounded-border ms-2.5" style="width: 2rem; height: 2rem" *ngIf="!(darkMode$ | async)">
+          <i pRipple icon-name="dark_mode" class="animate-fadeinup cursor-pointer text-surface-0" (click)="toggleDarkMode(true)"></i>
+        </div>
+        <div class="flex items-center justify-center bg-blue-400/10 rounded-border ms-2.5" style="width: 2rem; height: 2rem" *ngIf="darkMode$ | async">
+          <i pRipple icon-name="wb_sunny" class="animate-fadeindown cursor-pointer text-surface-0" (click)="toggleDarkMode(false)"></i>
+        </div>
+        <div class="flex h-full">
+          <div routerLink="/" class="justify-center cursor-pointer flex">
+            <img class="w-auto p-3 max-h-[4rem] self-center grayscale brightness-50" [src]="isMobile ? 'img/logo2.png' : 'img/logo.png'" />
+          </div>
+        </div>
+        <div class="flex items-center justify-center bg-blue-400/10 rounded-border ms-2.5" style="width: 2rem; height: 2rem">
+          <i pRipple icon-name="notifications" class="animate-fadeindown cursor-pointer text-surface-0" (click)="notification_menu.toggle($event)"></i>
+        </div>
+        <p-avatar pRipple (click)="profile_menu.toggle($event)" styleClass="ms-2.5 cursor-pointer text-surface-0 bg-blue-400/10" icon="pi pi-user" shape="square" />
+        <p-menu appendTo="body" #profile_menu [model]="profile_menu$ | async" [popup]="true">
+          <ng-template #item let-item>
+            <a pRipple class="flex items-center px-4 py-2 cursor-pointer group">
+              <i [icon-name]="item.icon"></i>
+              <span class="ms-2" [translate]="item.label"></span>
+              <i *ngIf="item.items" class="pi pi-angle-down ms-auto"></i>
+            </a>
+            <ng-template [ngIf]="sidebarType$ | async"></ng-template>
+          </ng-template>
+        </p-menu>
+        <p-menu appendTo="body" #notification_menu [model]="notification_menu$ | async" [popup]="true" />
+      </span>
+      <span>
+        <i *ngIf="!environment.production" (click)="showDesigner()" pRipple icon-name="palette" class="mx-2.5 cursor-pointer text-surface-0"></i>
+      </span>
+    </div>
+  </ng-container>
+  <ng-container *ngSwitchCase="['spaceBetween'].includes(navbar_type$ | async)">
+    <div
+      class="navbar h-[4rem] relative flex items-center justify-between bg-primary rounded-xl m-4 brightness-90"
+      [ngClass]="{ 'brightness-130': !(darkMode$ | async) }"
+      style="
+        box-shadow:
+          rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+          rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+          rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        background: #833ab4;
+        background: linear-gradient(270deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+      "
+    >
+      <span class="flex items-center px-2 lg:pe-4">
+        <i icon-name="menu" *ngIf="!['slim+', 'horizontal'].includes(sidebarType$ | async)" class="flex! text-surface-0 cursor-pointer px-3" (click)="toggle_sidebar()"></i>
+        <div class="flex items-center justify-center bg-blue-400/10 rounded-border ms-2.5" style="width: 2rem; height: 2rem" *ngIf="(language$ | async) != 'fa'">
+          <span pRipple class="animate-fadeinup cursor-pointer text-surface-0" (click)="changeLanguage('fa')">FA</span>
+        </div>
+        <div class="flex items-center justify-center bg-blue-400/10 rounded-border ms-2.5" style="width: 2rem; height: 2rem" *ngIf="(language$ | async) != 'en'">
+          <span pRipple class="animate-fadeinup cursor-pointer text-surface-0" (click)="changeLanguage('en')">EN</span>
+        </div>
+
+        <div class="flex items-center justify-center bg-blue-400/10 rounded-border ms-2.5" style="width: 2rem; height: 2rem" *ngIf="!(darkMode$ | async)">
+          <i pRipple icon-name="dark_mode" class="animate-fadeinup cursor-pointer text-surface-0" (click)="toggleDarkMode(true)"></i>
+        </div>
+        <div class="flex items-center justify-center bg-blue-400/10 rounded-border ms-2.5" style="width: 2rem; height: 2rem" *ngIf="darkMode$ | async">
+          <i pRipple icon-name="wb_sunny" class="animate-fadeindown cursor-pointer text-surface-0" (click)="toggleDarkMode(false)"></i>
+        </div>
+        <div class="flex items-center justify-center bg-blue-400/10 rounded-border ms-2.5" style="width: 2rem; height: 2rem">
+          <i pRipple icon-name="notifications" class="animate-fadeindown cursor-pointer text-surface-0" (click)="notification_menu.toggle($event)"></i>
+        </div>
+        <p-avatar pRipple (click)="profile_menu.toggle($event)" styleClass="ms-2.5 cursor-pointer text-surface-0 bg-blue-400/10" icon="pi pi-user" shape="square" />
+        <div class="flex items-center justify-center bg-blue-400/10 rounded-border ms-2.5" style="width: 2rem; height: 2rem">
+          <i *ngIf="!environment.production" (click)="showDesigner()" pRipple icon-name="palette" class="animate-fadeindown cursor-pointer text-surface-0"></i>
+        </div>
+        <p-menu appendTo="body" #profile_menu [model]="profile_menu$ | async" [popup]="true">
+          <ng-template #item let-item>
+            <a pRipple class="flex items-center px-4 py-2 cursor-pointer group">
+              <i [icon-name]="item.icon"></i>
+              <span class="ms-2" [translate]="item.label"></span>
+              <i *ngIf="item.items" class="pi pi-angle-down ms-auto"></i>
+            </a>
+            <ng-template [ngIf]="sidebarType$ | async"></ng-template>
+          </ng-template>
+        </p-menu>
+        <p-menu appendTo="body" #notification_menu [model]="notification_menu$ | async" [popup]="true" />
+      </span>
+      <span class="flex items-center px-2 lg:pe-4">
+        <div class="flex h-full">
+          <div routerLink="/" class="justify-center cursor-pointer flex">
+            <img class="w-auto p-3 max-h-[4rem] self-center grayscale brightness-50" [src]="isMobile ? 'img/logo2.png' : 'img/logo.png'" />
+          </div>
+        </div>
+      </span>
+    </div>
+  </ng-container>
+</ng-container>
+
+<p-dialog
+  [(visible)]="dialogVisible_profile"
+  [header]="'profile.title' | translate"
+  [position]="'center'"
+  [draggable]="false"
+  [closable]="true"
+  [showHeader]="true"
+  [modal]="true"
+  [dismissableMask]="true"
+  [style]="{
+    width: '500px'
+  }"
+  [breakpoints]="{ '640px': '90vw' }"
+>
+  <app-profile></app-profile>
+</p-dialog>

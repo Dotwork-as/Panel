@@ -1,0 +1,335 @@
+<div class="grid grid-cols-1 gap-6">
+  <div class="grid grid-cols-12 gap-8">
+    <div class="col-span-12 lg:col-span-6 xl:col-span-3" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+      <p-card>
+        <div class="flex justify-between mb-4">
+          <div>
+            <span class="block text-muted-color font-medium mb-4">Orders</span>
+            <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">152</div>
+          </div>
+          <div class="flex items-center justify-center bg-blue-100 dark:bg-blue-400/10 rounded-border" style="width: 2.5rem; height: 2.5rem">
+            <i icon-name="shopping_cart" class="text-blue-500"></i>
+          </div>
+        </div>
+        <span class="text-primary font-medium">24 new </span>
+        <span class="text-muted-color">since last visit</span>
+      </p-card>
+    </div>
+    <div class="col-span-12 lg:col-span-6 xl:col-span-3" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+      <p-card>
+        <div class="flex justify-between mb-4">
+          <div>
+            <span class="block text-muted-color font-medium mb-4">Revenue</span>
+            <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">$2.100</div>
+          </div>
+          <div class="flex items-center justify-center bg-orange-100 dark:bg-orange-400/10 rounded-border" style="width: 2.5rem; height: 2.5rem">
+            <i icon-name="attach_money" class="text-orange-500"></i>
+          </div>
+        </div>
+        <span class="text-primary font-medium">%52+ </span>
+        <span class="text-muted-color">since last week</span>
+      </p-card>
+    </div>
+    <div class="col-span-12 lg:col-span-6 xl:col-span-3" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+      <p-card>
+        <div class="flex justify-between mb-4">
+          <div>
+            <span class="block text-muted-color font-medium mb-4">Customers</span>
+            <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">28441</div>
+          </div>
+          <div class="flex items-center justify-center bg-cyan-100 dark:bg-cyan-400/10 rounded-border" style="width: 2.5rem; height: 2.5rem">
+            <i icon-name="group" class="text-cyan-500"></i>
+          </div>
+        </div>
+        <span class="text-primary font-medium">520 </span>
+        <span class="text-muted-color">newly registered</span>
+      </p-card>
+    </div>
+    <div class="col-span-12 lg:col-span-6 xl:col-span-3" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+      <p-card>
+        <div class="flex justify-between mb-4">
+          <div>
+            <span class="block text-muted-color font-medium mb-4">Comments</span>
+            <div class="text-surface-900 dark:text-surface-0 font-medium text-xl">152 Unread</div>
+          </div>
+          <div class="flex items-center justify-center bg-purple-100 dark:bg-purple-400/10 rounded-border" style="width: 2.5rem; height: 2.5rem">
+            <i icon-name="comment" class="text-purple-500"></i>
+          </div>
+        </div>
+        <span class="text-primary font-medium">85 </span>
+        <span class="text-muted-color">responded</span>
+      </p-card>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <p-card class="grid lg:col-span-2" [styleClass]="'overflow-visible'" header="Form" subheader="Form Description" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <span class="field has-error">
+          <p-floatlabel [variant]="floatType">
+            <input type="text" pInputText />
+            <label>Full Name</label>
+          </p-floatlabel>
+          <p-message severity="error" variant="text" size="small">This Field Is Required</p-message>
+        </span>
+        <span class="field">
+          <p-floatlabel [variant]="floatType">
+            <p-inputNumber />
+            <label>Age</label>
+          </p-floatlabel>
+        </span>
+        <span class="field">
+          <p-floatlabel [variant]="floatType">
+            <prime-calendar [showTime]="true" [showSeconds]="true" [showButtonBar]="true" appendTo="body" [showIcon]="true"></prime-calendar>
+            <label>Birthday</label>
+          </p-floatlabel>
+        </span>
+        <span class="field">
+          <p-floatlabel [variant]="floatType">
+            <p-password [toggleMask]="true" autocomplete="off" [feedback]="false"></p-password>
+            <label for="password" translate="Password"></label>
+          </p-floatlabel>
+        </span>
+        <span class="field">
+          <p-floatlabel [variant]="floatType">
+            <p-select [filter]="false" [showClear]="true" [autoDisplayFirst]="true" [options]="options" optionLabel="key" optionValue="value" appendTo="self"></p-select>
+            <label translate="Drop Down Single Select"></label>
+          </p-floatlabel>
+        </span>
+        <span class="field">
+          <p-multiSelect appendTo="self" [maxSelectedLabels]="5" [options]="options" [filter]="true" optionLabel="key" optionValue="value" display="chip" [defaultLabel]="'multi Select'"> </p-multiSelect>
+        </span>
+        <span class="action-buttons">
+          <p-button label="Back" severity="danger" variant="outlined" [rounded]="true" />
+          <p-button label="Submit" [rounded]="true" />
+          <p-button [loading]="true" label="Submit" [rounded]="true" />
+        </span>
+      </div>
+    </p-card>
+    <p-card class="grid lg:col-span-1" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+      <div class="block overflow-auto w-full">
+        <highcharts-chart *ngIf="chartOptions" [options]="chartOptions" [Highcharts]="Highcharts" class="block w-full overflow-auto!"></highcharts-chart>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+    <p-card class="grid lg:col-span-2" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+      <p-tabs value="0">
+        <p-tablist>
+          <p-tab value="0">Header I</p-tab>
+          <p-tab value="1">Header II</p-tab>
+          <p-tab disabled>Header III</p-tab>
+        </p-tablist>
+        <p-tabpanels>
+          <p-tabpanel value="0">
+            <p class="m-0">Header I</p>
+          </p-tabpanel>
+          <p-tabpanel value="1">
+            <p class="m-0">Header II</p>
+          </p-tabpanel>
+        </p-tabpanels>
+      </p-tabs>
+    </p-card>
+    <p-card class="grid lg:col-span-2" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+      <span class="flex justify-center font-bold text-primary-700 text-8xl mb-6">{{ sliderValue }}</span>
+      <p-slider [(ngModel)]="sliderValue" />
+    </p-card>
+    <p-card class="grid lg:col-span-2" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+      <div class="grid my-6 grid-cols-3 gap-4">
+        <div class="flex items-center gap-2">
+          <p-radiobutton [(ngModel)]="radioValue" name="size" value="Small" size="small" />
+          <label class="text-sm">Small</label>
+        </div>
+        <div class="flex items-center gap-2">
+          <p-radiobutton [(ngModel)]="radioValue" name="size" value="Normal" />
+          <label>Normal</label>
+        </div>
+        <div class="flex items-center gap-2">
+          <p-radiobutton [(ngModel)]="radioValue" name="size" value="Large" size="large" />
+          <label class="text-lg">Large</label>
+        </div>
+      </div>
+      <div class="grid my-6 grid-cols-3 gap-4">
+        <div class="flex items-center gap-2">
+          <p-checkbox [(ngModel)]="checkBoxValue" inputId="size_small" value="Small" size="small" />
+          <label class="text-sm">Small</label>
+        </div>
+        <div class="flex items-center gap-2">
+          <p-checkbox [(ngModel)]="checkBoxValue" inputId="size_normal" value="Normal" />
+          <label>Normal</label>
+        </div>
+        <div class="flex items-center gap-2">
+          <p-checkbox [(ngModel)]="checkBoxValue" inputId="size_large" value="Large" size="large" />
+          <label class="text-lg">Large</label>
+        </div>
+      </div>
+    </p-card>
+    <p-card class="grid lg:col-span-2" header="Modal And Confirm dialog" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+      <div class="grid my-6 grid-cols-3 gap-4">
+        <div class="flex items-center gap-2">
+          <p-button label="Modal" size="large" (click)="dialog = true"/>
+          <p-button [styleClass]="'w-[132px]'" label="Confirm Dialog" severity="secondary" size="large" (click)="showConfirmDialog()" />
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <p-card header="Buttons" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+    <div class="grid gap-2">
+      <div class="flex flex-wrap justify-center gap-2">
+        <p-divider align="left" type="solid">Severity</p-divider>
+        <p-button label="Primary" />
+        <p-button label="Secondary" severity="secondary" />
+        <p-button label="Success" severity="success" />
+        <p-button label="Info" severity="info" />
+        <p-button label="Warn" severity="warn" />
+        <p-button label="Help" severity="help" />
+        <p-button label="Danger" severity="danger" />
+        <p-button label="Contrast" severity="contrast" />
+        <p-button label="Disabled" [disabled]="true" />
+        <div class="flex items-center lg:justify-center lg:grow gap-2">
+          <p-button label="Small" size="small" />
+          <p-button label="Medium" />
+          <p-button label="Large" size="large" />
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-2">
+        <p-divider align="left" type="solid">Raised</p-divider>
+        <p-button label="Primary" raised="true" />
+        <p-button label="Secondary" severity="secondary" raised="true" />
+        <p-button label="Success" severity="success" raised="true" />
+        <p-button label="Info" severity="info" raised="true" />
+        <p-button label="Warn" severity="warn" raised="true" />
+        <p-button label="Help" severity="help" raised="true" />
+        <p-button label="Danger" severity="danger" raised="true" />
+        <p-button label="Contrast" severity="contrast" raised="true" />
+        <p-button label="Disabled" raised="true" [disabled]="true" />
+        <div class="flex items-center lg:justify-center lg:grow gap-2">
+          <p-button label="Small" size="small" raised="true" />
+          <p-button label="Medium" raised="true" />
+          <p-button label="Large" size="large" raised="true" />
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-2">
+        <p-divider align="left" type="solid">Rounded</p-divider>
+        <p-button label="Primary" rounded="true" />
+        <p-button label="Secondary" severity="secondary" rounded="true" />
+        <p-button label="Success" severity="success" rounded="true" />
+        <p-button label="Info" severity="info" rounded="true" />
+        <p-button label="Warn" severity="warn" rounded="true" />
+        <p-button label="Help" severity="help" rounded="true" />
+        <p-button label="Danger" severity="danger" rounded="true" />
+        <p-button label="Contrast" severity="contrast" rounded="true" />
+        <p-button label="Disabled" rounded="true" [disabled]="true" />
+        <div class="flex items-center lg:justify-center lg:grow gap-2">
+          <p-button label="Small" size="small" rounded="true" />
+          <p-button label="Medium" rounded="true" />
+          <p-button label="Large" size="large" rounded="true" />
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-2">
+        <p-divider align="left" type="solid">Text</p-divider>
+        <p-button label="Primary" variant="text" />
+        <p-button label="Secondary" severity="secondary" variant="text" />
+        <p-button label="Success" severity="success" variant="text" />
+        <p-button label="Info" severity="info" variant="text" />
+        <p-button label="Warn" severity="warn" variant="text" />
+        <p-button label="Help" severity="help" variant="text" />
+        <p-button label="Danger" severity="danger" variant="text" />
+        <p-button label="Contrast" severity="contrast" variant="text" />
+        <p-button label="Disabled" variant="text" [disabled]="true" />
+        <div class="flex items-center lg:justify-center lg:grow gap-2">
+          <p-button label="Small" size="small" variant="text" />
+          <p-button label="Medium" variant="text" />
+          <p-button label="Large" size="large" variant="text" />
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-2">
+        <p-divider align="left" type="solid">Raised Text</p-divider>
+        <p-button label="Primary" raised="true" variant="text" />
+        <p-button label="Secondary" severity="secondary" raised="true" variant="text" />
+        <p-button label="Success" severity="success" raised="true" variant="text" />
+        <p-button label="Info" severity="info" raised="true" variant="text" />
+        <p-button label="Warn" severity="warn" raised="true" variant="text" />
+        <p-button label="Help" severity="help" raised="true" variant="text" />
+        <p-button label="Danger" severity="danger" raised="true" variant="text" />
+        <p-button label="Contrast" severity="contrast" raised="true" variant="text" />
+        <p-button label="Disabled" raised="true" variant="text" [disabled]="true" />
+        <div class="flex items-center lg:justify-center lg:grow gap-2">
+          <p-button label="Small" size="small" raised="true" variant="text" />
+          <p-button label="Medium" raised="true" variant="text" />
+          <p-button label="Large" size="large" raised="true" variant="text" />
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-2">
+        <p-divider align="left" type="solid">Outlined</p-divider>
+        <p-button label="Primary" variant="outlined" />
+        <p-button label="Secondary" variant="outlined" severity="secondary" />
+        <p-button label="Success" variant="outlined" severity="success" />
+        <p-button label="Info" variant="outlined" severity="info" />
+        <p-button label="Warn" variant="outlined" severity="warn" />
+        <p-button label="Help" variant="outlined" severity="help" />
+        <p-button label="Danger" variant="outlined" severity="danger" />
+        <p-button label="Contrast" variant="outlined" severity="contrast" />
+        <p-button label="Disabled" variant="outlined" [disabled]="true" />
+        <div class="flex items-center lg:justify-center lg:grow gap-2">
+          <p-button label="Small" size="small" variant="outlined" />
+          <p-button label="Medium" variant="outlined" />
+          <p-button label="Large" size="large" variant="outlined" />
+        </div>
+      </div>
+    </div>
+  </p-card>
+
+  <p-card header="Table" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+    <data-table [dataTable$]="dataTable$" [settingTable$]="tableSetting$"> </data-table>
+  </p-card>
+
+  <p-card header="Typography" pAnimateOnScroll enterClass="animate-enter fade-in-10 zoom-in-50 animate-duration-1000">
+    <div class="grid grid-flow-row grid-cols-1 lg:grid-cols-2 gap-2 rtl:[direction:ltr]">
+      <span>
+        <p class="text-left font-normal text-xs">This is Normal Font with text-xs</p>
+        <p class="text-left font-normal text-sm">This is Normal Font with text-sm</p>
+        <p class="text-left font-normal text-base">This is Normal Font with text-base</p>
+        <p class="text-left font-normal text-lg">This is Normal Font with text-lg</p>
+        <p class="text-left font-normal text-xl">This is Normal Font with text-xl</p>
+        <p class="text-left font-normal text-2xl">This is Normal Font with text-2xl</p>
+        <p class="text-left font-normal text-3xl">This is Normal Font with text-3xl</p>
+        <p class="text-left font-normal text-4xl">This is Normal Font with text-4xl</p>
+      </span>
+      <span>
+        <p class="text-right font-normal text-xs">این فونت معمولی با اندازه خیلی کوچک است</p>
+        <p class="text-right font-normal text-sm">این فونت معمولی با اندازه کوچک است</p>
+        <p class="text-right font-normal text-base">این فونت معمولی با اندازه معمولی است</p>
+        <p class="text-right font-normal text-lg">این فونت معمولی با اندازه بزرگ است</p>
+        <p class="text-right font-normal text-xl">این فونت معمولی با اندازه خیلی بزرگ است</p>
+        <p class="text-right font-normal text-2xl">این فونت معمولی با اندازه 2 خیلی بزرگ است</p>
+        <p class="text-right font-normal text-3xl">این فونت معمولی با اندازه 3 خیلی بزرگ است</p>
+        <p class="text-right font-normal text-4xl">این فونت معمولی با اندازه 4 خیلی بزرگ است</p>
+      </span>
+    </div>
+  </p-card>
+</div>
+
+<p-dialog
+  [(visible)]="dialog"
+  header="Modal"
+  [position]="isMobile ? 'bottom' : 'center'"
+  [draggable]="!isMobile"
+  [closable]="true"
+  [showHeader]="!isMobile"
+  [modal]="true"
+  [dismissableMask]="true"
+  [style]="{
+    width: isMobile ? '96vw' : '50vw',
+    minWidth: isMobile ? '96vw' : '50vw',
+    overflow: 'visible'
+  }"
+  class="{{ isMobile ? 'primary bottom-sheet' : '' }}"
+>
+  <div [ngClass]="{ 'sheet-header': isMobile }" class="hidden" (click)="dialog = false"></div>
+  <div *ngIf="isMobile" class="p-dialog-title p-4">Modal</div>
+
+  <p class="text-center font-normal text-2xl">At sizes less than 768, the modal has a bottom sheet mode,</p>
+</p-dialog>

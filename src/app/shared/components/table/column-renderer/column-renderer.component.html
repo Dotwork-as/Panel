@@ -1,0 +1,48 @@
+<ng-template [ngIf]="(loading$|async) === false && !(inProgressApis$|async).includes(setting.tableName+':tr:'+index)" [ngIfElse]="skeleton">
+  <ng-container [ngSwitch]="column?.renderer">
+    <ng-container *ngSwitchCase="'boolean'">
+      <boolean-renderer [data]="data[column.field]"></boolean-renderer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'text_color'">
+      <text-color-renderer [data]="data" [col]="column"></text-color-renderer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'button'">
+      <button-renderer [col]="column" [data]="data" [setting]="setting"></button-renderer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'date'">
+      <date-renderer [data]="data" [col]="column"></date-renderer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'dropdown'">
+      <dropdown-renderer [data]="data" [col]="column" [setting]="setting" [index]="index"></dropdown-renderer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'tag'">
+      <tag-renderer [data]="data" [col]="column"></tag-renderer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'icon'">
+      <icon-renderer [data]="data" [col]="column" [setting]="setting" [index]="index"></icon-renderer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'toggle'">
+      <toggle-renderer [data]="data" [col]="column" [setting]="setting" [index]="index"></toggle-renderer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'action_button'">
+      <action-button-renderer [data]="data" [col]="column" [setting]="setting" [index]="index"></action-button-renderer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'link'">
+      <link-renderer [data]="data" [col]="column" [setting]="setting"></link-renderer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'thumbnail'">
+      <thumbnail-renderer [data]="data[column.field]"></thumbnail-renderer>
+    </ng-container>
+    <ng-container *ngSwitchCase="'related_question'">
+      <related-question-renderer [col]="column" [data]="data" [index]="index" [setting]="setting"></related-question-renderer>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+    <span [style]="column.renderer_option?.style||''" class="column-default {{column.renderer_option?.class||''}}" [title]="data[column.field]?.toString() ? data[column.field] : '-'">
+      {{data[column.field]?.toString() ? data[column.field] : '-'}}
+    </span>
+    </ng-container>
+  </ng-container>
+</ng-template>
+<ng-template #skeleton>
+  <p-skeleton height="2rem"></p-skeleton>
+</ng-template>

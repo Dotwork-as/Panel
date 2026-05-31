@@ -1,0 +1,170 @@
+<p-table
+  #dt
+  [lazy]="true"
+  (onLazyLoad)="onFilters($event)"
+  [globalFilterFields]="['username']"
+  (onRowReorder)="onRowReorder($event?.dragIndex, $event?.dropIndex)"
+  selectionMode="multiple"
+  [dataKey]="(settingTable$ | async)?.setting?.dataKeyRow || 'id'"
+  [(selection)]="selection"
+  (selectionChange)="onSelectionChange($event)"
+  (mouseleave)="rowHoverIndex = -1"
+  (onHeaderCheckboxToggle)="onSelectedAll($event)"
+  [value]="dataTable$ | async | MapDataTable: (settingTable$ | async)?.mapData || defaultMapData"
+>
+  <ng-template #caption>
+    <div class="flex justify-between">
+      <ng-content select=".buttons"></ng-content>
+      <div class="flex justify-end">
+        <ng-template [ngIf]="(settingTable$ | async)?.setting?.toggleColumns !== false || (settingTable$ | async)?.setting?.reOrderColumns !== false || (toggleFilter$ | async)">
+          <p-button *ngIf="toggleFilter$ | async" pRipple severity="info" [rounded]="true" [icon-name]="(showFilter$ | async) ? 'filter_alt' : 'filter_alt_off'" (click)="showFilter$.next(!showFilter$.value)" class="cursor-pointer mx-2"></p-button>
+          <p-button pRipple severity="info" [rounded]="true" icon-name="menu" class="cursor-pointer" (click)="toggleColumns.toggle($event)"></p-button>
+          <p-popover #toggleColumns appendTo="body">
+            <ng-container *ngFor="let column of tableColumns$ | async; let index = index">
+              <div class="flex items-center me-2 py-2" pDroppable (onDrop)="colReorderToIndex = index; onColReorder()">
+                <span *ngIf="(settingTable$ | async)?.setting?.reOrderColumns !== false" icon-name="drag_indicator" style="cursor: move" dragEffect="move" pDraggable (onDrag)="colReorderFromIndex = index"></span>
+                <p-checkbox *ngIf="(settingTable$ | async)?.setting?.toggleColumns !== false" class="checkbox-solid" [binary]="true" [ngModel]="!column?.is_hidden" (click)="toggleColumn(column?.label, !column?.is_hidden)"></p-checkbox>
+                <label class="ms-2">{{ (column.label ? 'table.column.' + column.label : '') | translate }}</label>
+              </div>
+            </ng-container>
+          </p-popover>
+        </ng-template>
+      </div>
+    </div>
+    <!-- <div class="flex justify-center items-center">
+      <div class="grow flex items-center">
+        <p-floatlabel [variant]="floatType" *ngIf="[undefined, true].includes((settingTable$|async).setting.globalFilter)">
+          <input pInputText (input)="dt.filterGlobal($event.target?.['value'], 'contains')" [(ngModel)]="filterGlobal">
+          <label translate="forms.search"></label>
+        </p-floatlabel>
+        <ng-content select=".meta"></ng-content>
+      </div>
+    </div> -->
+  </ng-template>
+  <ng-template #header>
+    <tr class="filter-row" [class.hidden]="!(showFilter$ | async)">
+      <th></th>
+      <ng-template [ngIf]="(settingTable$ | async)?.setting?.reorder && (dataTable$ | async)?.length">
+        <th style="width: 4rem"></th>
+      </ng-template>
+      <ng-template [ngIf]="(settingTable$ | async)?.setting?.selection">
+        <th style="width: 4rem"></th>
+      </ng-template>
+      <ng-container *ngFor="let column of (settingTable$ | async).columns">
+        <th *ngIf="!column?.is_hidden" [pTooltip]="'forms.search_to' | translate: { field: ('table.column.' + column.label | translate) }">
+          <ng-template [ngIf]="column.filter?.key">
+            <ng-container [ngSwitch]="column.filter.type">
+              <span *ngSwitchCase="'text'" class="field d-block search-input-wrapper">
+                <i class="pi pi-search search-icon"></i>
+                <input pInputText (input)="dt.filter($event.target?.['value'], column.filter.key, 'contains')" [placeholder]="'forms.search_to' | translate: { field: ('table.column.' + column.label | translate) }" />
+              </span>
+              <span *ngSwitchCase="'dropdown'" class="field d-block">
+                <p-select [autoDisplayFirst]="false" [filter]="false" appendTo="body" (onChange)="dt.filter($event?.['value']?.[column.filter.option.optionValue || 'id'], column.filter.key, 'contains')" [options]="column.filter.option.data | async" [optionLabel]="column.filter.option.optionLabel || 'name'" [showClear]="true"> </p-select>
+              </span>
+              <span *ngSwitchCase="'tree_select'" class="field d-block">
+                <p-treeSelect [filter]="true" selectionMode="single" [metaKeySelection]="false" [showClear]="true" (onNodeSelect)="dt.filter($event.node, column.filter.key, 'contains')" (onClear)="dt.filter({}, column.filter.key, 'contains')" [options]="column.filter.option.data | async"> </p-treeSelect>
+              </span>
+              <span *ngSwitchCase="'boolean'" class="field d-block" [style]="{ 'text-align': column?.with === 0 ? 'center' : 'unset' }"> </span>
+              <span *ngSwitchCase="'range_date'" class="field d-block" [style]="{ 'text-align': column?.with === 0 ? 'center' : 'unset' }">
+                <div class="row">
+                  <div class="col-lg-6">
+                    <prime-calendar [placeholder]="'forms.from_date' | translate" appendTo="body" (onSelect)="dt.filter($event, column.filter.option.startKey, 'contains')"> </prime-calendar>
+                  </div>
+                  <div class="col-lg-6">
+                    <prime-calendar [placeholder]="'forms.to_date' | translate" appendTo="body" (onSelect)="dt.filter($event, column.filter.option.endKey, 'contains')"> </prime-calendar>
+                  </div>
+                </div>
+              </span>
+              <span *ngSwitchCase="'date'" class="field d-block" [style]="{ 'text-align': column?.with === 0 ? 'center' : 'unset' }">
+                <prime-calendar [placeholder]="'table.column.' + column.label | translate" appendTo="body" (onSelect)="dt.filter($event, column.filter.key, 'contains')"> </prime-calendar>
+              </span>
+            </ng-container>
+          </ng-template>
+        </th>
+      </ng-container>
+    </tr>
+    <tr *ngFor="let depth of [].constructor(depth_columns$ | async); let depth_i = index">
+      <ng-template [ngIf]="!depth_i">
+        <ng-template [ngIf]="(settingTable$ | async)?.setting?.reorder && (dataTable$ | async)?.length">
+          <th style="width: 4rem" [rowSpan]="depth_columns$ | async"></th>
+        </ng-template>
+        <ng-template [ngIf]="(settingTable$ | async)?.setting?.selection">
+          <th style="width: 4rem" [rowSpan]="depth_columns$ | async">
+            <p-tableHeaderCheckbox class="checkbox-solid"></p-tableHeaderCheckbox>
+          </th>
+        </ng-template>
+        <th style="width: 1rem" [rowSpan]="depth_columns$ | async">#</th>
+      </ng-template>
+      <ng-container *ngFor="let column of getDepthColumns(depth_i) | async">
+        <th [pSortableColumn]="column?.sort ? column.sort_key || column.field : null" *ngIf="!column?.is_hidden" [rowSpan]="column?.sub_columns?.length ? 1 : column?.sub_columns?.length" [colSpan]="column?.sub_columns?.length || 1">
+          <label [class.d-block]="column?.with === 0 && !column?.sort" [style.cursor]="column?.sort ? 'pointer' : 'auto'" [style]="{ 'text-align': column?.with === 0 ? 'center' : 'unset' }">
+            <span>
+              {{ (column.label ? 'table.column.' + column.label : '') | translate }}
+            </span>
+            <ng-template [ngIf]="column?.sort">
+              <ng-template [ngIf]="[column?.field, column?.sort_key].includes(filter?.sort?.field) && filter?.sort?.field" [ngIfElse]="without_sort">
+                <i *ngIf="filter?.sort?.type === 1" class="sort-icon pi pi-sort-amount-down-alt animate__animated animate__fadeInDown"></i>
+                <i *ngIf="filter?.sort?.type === -1" class="sort-icon pi pi-sort-amount-up-alt animate__animated animate__fadeInUp"></i>
+              </ng-template>
+              <ng-template #without_sort>
+                <i class="sort-icon pi pi-sort-alt"></i>
+              </ng-template>
+            </ng-template>
+          </label>
+        </th>
+      </ng-container>
+    </tr>
+  </ng-template>
+  <ng-template #body let-data let-i="rowIndex">
+    <tr (mouseover)="rowIsHover(i)" [pReorderableRow]="i" [ngStyle]="{ cursor: (settingTable$ | async)?.setting?.clickableRow === false ? 'auto' : 'pointer' }">
+      <ng-template [ngIf]="(loading$ | async) === false">
+        <ng-template [ngIf]="(settingTable$ | async).setting?.reorder && (dataTable$ | async)?.length">
+          <td>
+            <span class="pi pi-bars" pReorderableRowHandle></span>
+          </td>
+        </ng-template>
+        <ng-template [ngIf]="(settingTable$ | async).setting?.selection">
+          <td>
+            <p-tableCheckbox [value]="data" class="checkbox-solid"></p-tableCheckbox>
+          </td>
+        </ng-template>
+        <td>{{ countFirstRow + 1 + i }}</td>
+      </ng-template>
+      <ng-container *ngFor="let depth of [].constructor(depth_columns$ | async); let depth_i = index">
+        <ng-container *ngFor="let column of getDepthColumns(depth_i) | async">
+          <td
+            *ngIf="!column.is_hidden && !column?.sub_columns"
+            (click)="clickRow('click', column, data)"
+            [class.width-available]="column?.with !== 0"
+            [style]="{
+              'min-width': column?.with ? column.with.toString() + 'rem' : 'fit-content',
+              'width': column?.with === 0 ? 0 : null,
+              'text-align': column?.with === 0 ? 'center' : 'unset'
+            }"
+          >
+            <column-renderer [loading$]="loading$" [column]="column" [data]="data" [setting]="(settingTable$ | async)?.setting" [index]="i" [hoverIndex]="rowHoverIndex"></column-renderer>
+          </td>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </ng-template>
+  <ng-template #loadingbody let-columns="columns">
+    <tr>
+      <ng-container *ngFor="let depth of [].constructor(depth_columns$ | async); let depth_i = index">
+        <ng-container *ngFor="let column of getDepthColumns(depth_i) | async">
+          <td><p-skeleton height="2rem"></p-skeleton></td>
+        </ng-container>
+      </ng-container>
+      <td><p-skeleton height="2rem"></p-skeleton></td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr class="">
+      <td class="text-center border-none" [colSpan]="colSpanEmptyTAble" translate="feedback.no_result_found"></td>
+    </tr>
+  </ng-template>
+</p-table>
+<ng-template [ngIf]="(settingTable$ | async)?.setting?.pagination">
+  <p-paginator appendTo="self" #paginator [showJumpToPageInput]="false" [showPageLinks]="true" [first]="countFirstRow" [showFirstLastIcon]="true" [totalRecords]="totalRecord((settingTable$ | async).setting.tableName) | async" [pageLinkSize]="5" [rows]="limit" [rowsPerPageOptions]="[5, 10, 50, 100, 500]" (onPageChange)="paginate($event)"> </p-paginator>
+</ng-template>
+<ng-content select=".error-message"></ng-content>

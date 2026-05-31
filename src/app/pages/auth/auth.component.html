@@ -1,0 +1,66 @@
+<div
+  class="grid grid-cols-12 h-screen px-4"
+  style="
+    box-shadow:
+      rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+      rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+      rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+    background: linear-gradient(to right, #135058, #8faa8c, #135058);
+  "
+>
+  <div class="grid items-center justify-center col-start-0 col-span-12 sm:col-start-2 sm:col-span-10 md:col-start-3 md:col-span-8 xl:col-start-4 xl:col-span-6 overflow-y-auto">
+    <div class="h-fit">
+      <div class="flex h-full items-center justify-center">
+        <span class="flex w-full h-full bg-surface-0 shadow-md rounded-xl gap-4 overflow-hidden">
+          <div class="hidden md:flex md:w-1/2 bg-primary-500 rounded-se-[11rem_15rem] rounded-es-[10rem_5rem] items-center justify-center">
+            <svg-icon src="svg/login.svg" class="w-full px-4" [svgStyle]="{ 'width': '100%', 'height': 'fit-content' }"></svg-icon>
+          </div>
+          <div class="w-full md:w-1/2 flex flex-col justify-center px-8 py-10 gap-4" [formGroup]="formGroup" (keydown.enter)="submit()">
+            <span class="flex justify-center text-3xl text-surface-700 mt-10 md:mt-0" translate="app_name"></span>
+            <span class="flex justify-center text-sm text-surface-700" translate=""></span>
+            <p-divider styleClass="no-padding">
+              <span class="px-4">{{ 'auth.login' | translate }}</span>
+            </p-divider>
+            <span class="field" [class.has-error]="hasError('username', formGroup)">
+              <p-floatlabel variant="on">
+                <input [attr.id]="isTestEnv ? 'username' : null" pInputText formControlName="username" />
+                <label for="username" translate="auth.username"></label>
+              </p-floatlabel>
+              <p-message *ngIf="hasError('username', formGroup, submitted)" severity="error" variant="text" size="small">{{ 'feedback.required' | translate }}</p-message>
+            </span>
+            <span class="field" [class.has-error]="hasError('password', formGroup)">
+              <p-floatlabel variant="on">
+                <p-password [inputId]="isTestEnv ? 'password' : null" formControlName="password" [toggleMask]="true" autocomplete="off" [feedback]="false"></p-password>
+                <label for="password" translate="auth.password"></label>
+              </p-floatlabel>
+              <p-message *ngIf="hasError('password', formGroup, submitted)" severity="error" variant="text" size="small">{{ 'feedback.required' | translate }}</p-message>
+            </span>
+            <div class="flex justify-between items-center">
+              <span class="field w-[80px]!" [class.has-error]="hasError('captchaAnswer', formGroup)">
+                <p-floatlabel variant="on" class="relative">
+                  <input [attr.id]="isTestEnv ? 'captchaAnswer' : null" pInputText formControlName="captchaAnswer" />
+                  <label for="captchaAnswer" translate="auth.captcha"></label>
+                </p-floatlabel>
+              </span>
+              <span (click)="generateCaptcha()" class="flex items-center">
+                <img class="h-[40px]! rounded-md ms-2" [src]="captchaImage$ | async" alt="captcha image" />
+                <i class="cursor-pointer" icon-name="refresh"></i>
+              </span>
+            </div>
+            <p-message *ngIf="hasError('captchaAnswer', formGroup, submitted)" severity="error" variant="text" size="small">{{ 'feedback.required' | translate }}</p-message>
+            <div class="flex items-center w-[100%]">
+              <p-button [loading]="showLoading" class="flex-1" (click)="submit()" styleClass="w-full" severity="primary" [label]="'auth.submit' | translate"></p-button>
+              <div class="flex items-center justify-center bg-primary rounded-border ms-2.5 cursor-pointer" style="width: 40px; height: 40px" *ngIf="(language$ | async) != 'fa'" (click)="changeLanguage('fa')">
+                <span pRipple class="animate-fadeinup text-surface-0">FA</span>
+              </div>
+              <div class="flex items-center justify-center bg-primary rounded-border ms-2.5 cursor-pointer" style="width: 40px; height: 40px" *ngIf="(language$ | async) != 'en'" (click)="changeLanguage('en')">
+                <span pRipple class="animate-fadeinup text-surface-0">EN</span>
+              </div>
+            </div>
+            <!-- <p-button variant="text" [label]="'auth.forget_pass'|translate"></p-button> -->
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div id="main" class="h-full flex flex-col">
+  <navbar></navbar>
+  <div class="flex flex-grow h-[1rem] mx-4 mb-4">
+    <sidebar></sidebar>
+    <div id="content" class="flex flex-col flex-grow overflow-auto scroll-smooth relative">
+      <breadcrumb></breadcrumb>
+      <div class="flex self-center flex-grow w-full" pAnimateOnScroll enterClass="animate-enter fade-in-10 slide-in-from-t-8 animate-duration-1000">
+        <div class="w-full">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

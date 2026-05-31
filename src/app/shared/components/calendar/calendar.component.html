@@ -1,0 +1,23 @@
+<ng-template [ngIf]='(language$|async)=="en"' [ngIfElse]='fa'>
+  <p-calendar
+    [showIcon]='true'
+    [showButtonBar]='true'
+    clearButtonStyleClass='btn btn-outline-secondary'
+    todayButtonStyleClass='btn btn-outline-secondary'
+    [showTime]='true'
+    [showSeconds]='true'
+    appendTo='body'
+    dateFormat='yy/mm/dd' (ngModelChange)='updatedDate(moment($event).unix())' [(ngModel)]='val_en'></p-calendar>
+</ng-template>
+<ng-template #fa>
+  <prime-calendar
+    [showIcon]='true'
+    [showButtonBar]='true'
+    clearButtonStyleClass='btn btn-outline-secondary'
+    todayButtonStyleClass='btn btn-outline-secondary'
+    [showTime]='true'
+    [showSeconds]='true'
+    appendTo='body'
+    dateFormat='yy/mm/dd' (ngModelChange)='updatedDate($event?.unix())' [(ngModel)]='val_fa'></prime-calendar>
+</ng-template>
+<label [translate]='label'></label>
