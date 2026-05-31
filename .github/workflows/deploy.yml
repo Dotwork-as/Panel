@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 permissions:
   contents: read
@@ -10,42 +10,46 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: false
+
+env:
+  NODE_VERSION: 20
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: 20
-        cache: npm
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Build Angular app
-      run: npm run build:dev
+      - name: Build Angular app
+        run: npm run build:dev
 
-    - name: Prepare deployment
-      run: |
-        mkdir -p public
-        cp -r dist/panel/browser/* public/
-        cp public/index.html public/404.html
+      - name: Prepare deployment
+        run: |
+          mkdir -p public
+          cp -r dist/panel/browser/* public/
+          cp public/index.html public/404.html
 
-    - name: Configure Pages
-      uses: actions/configure-pages@v4
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
 
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        path: ./public
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
 
   deploy:
     needs: build
@@ -54,6 +58,6 @@ jobs:
       name: github-pages
 
     steps:
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
